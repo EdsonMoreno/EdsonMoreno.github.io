@@ -6,9 +6,24 @@
     <title>Batalla de Techos 🔥💧🌐✈️</title>
 </head>
 <body>
-    <section id="elejir-carta"></section>
+    <section id="elejir-carta">
+        <h1>Batalla de Techos 🔥💧🌐✈️</h1>
+        <p>Elije un campeon:</p>
+        <!--Los botones de radio se en el mismo name para poder
+        elejir solo uno-->
+        <!--La etiqueta for vincula label con radio-->
+        <input type="radio" name="e-campeon" id="misu"> <label for="misu">Misu -> agua</label>
+        <input type="radio" name="e-campeon" id="tsuchi"> <label for="tsuchi">Tsuchi -> tierra</label>
+        <input type="radio" name="e-campeon" id="hi"> <label for="hi">Hi -> fuego</label>
+        <input type="radio" name="e-campeon" id="kaze"> <label for="kaze">kaze -> aire</label>
+
+        <button id="campeon">Yo te Elijo!</button>
+    </section>
     <section id="elejir-ataque"></section>
-    <section id="batalla"></section>
+    <section id="batalla">
+        <div>Vidas jugador: <span>3</span></div>
+        <div>Vidas Pc: <span>3</span></div>
+    </section>
     <section id="resultado"></section>
 </body>
 </html>
