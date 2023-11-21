@@ -8,7 +8,10 @@ function Campeon() {
         c_elejido = "Hi";
     }else if(document.getElementById("kaze").checked){
         c_elejido = "Kaze";
+    }else{
+        alert("Debes elegir un campeon");
     }
+    document.getElementById("campeon_jugador").innerHTML="<b>"+c_elejido+"</>";
     alert("Elejiste: "+c_elejido);
 }
 //alert("Bienvenido");
