@@ -1,3 +1,27 @@
+var picas, corazones, diamantes, treboles;
+var objcarta_diamante, objcarta_trebol, objetocarta_corazon, objcarta_pica;
+class Carta
+{
+    constructor(rango){
+        if(rango == "a"){
+            this.defenza = aleatorio(0,200);
+            this.ataque = aleatorio(0,200);
+        }else         if(rango == "b"){
+            this.defenza = aleatorio(201,400);
+            this.ataque = aleatorio(201,400);
+        }else         if(rango == "c"){
+            this.defenza = aleatorio(401,800);
+            this.ataque = aleatorio(401,800);
+        }else         if(rango == "d"){
+            this.defenza = aleatorio(600,1000);
+            this.ataque = aleatorio(600,1000);
+        }else {
+            this.defenza = aleatorio(0,1000);
+            this.ataque = aleatorio(0,1000);  
+        }
+    }
+
+}
 function aleatorio(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
@@ -42,9 +66,46 @@ function CampeonEnemigo(){
     document.getElementById("campeon_pc").innerHTML="<b>"+c_enemigo+"</>";
 
 }
+function Atacar(e) {
+   // alert(e.target.id);
+    switch (e.target.id) {
+        case "carta_1":
+            objcarta_pica = new Carta();
+            alert("ataque: "+objcarta_pica.ataque+" defenza: "+objcarta_pica.defenza);
+            document.getElementById("carta_1").disabled = true;
+            break;
+        case "carta_2":
+            objcarta_corazon = new Carta();
+            alert("ataque: "+objcarta_corazon.ataque+" defenza: "+objcarta_corazon.defenza);
+            document.getElementById("carta_2").disabled = true;
+            break;
+        case "carta_3":
+            objcarta_diamante = new Carta();
+            alert("ataque: "+objcarta_diamante.ataque+" defenza: "+objcarta_diamante.defenza);
+            document.getElementById("carta_3").disabled = true;           
+            break;
+        case "carta_4":
+            objcarta_trebol = new Carta();
+            alert("ataque: "+objcarta_trebol.ataque+" defenza: "+objcarta_trebol.defenza);
+            document.getElementById("carta_4").disabled = true;           
+            break;   
+    }
+    alert("Enemigo elije");
+}
+
 //alert("Bienvenido");
 window.onload = function(){
     let campeon = document.getElementById("campeon");
+    picas= document.getElementById("carta_1");
+    trebol= document.getElementById("carta_4");
+    corazones = document.getElementById("carta_2");
+    diamantes= document.getElementById("carta_3");
+
+    picas.addEventListener("click",Atacar);
+    trebol.addEventListener("click",Atacar);
+    corazones.addEventListener("click",Atacar);
+    diamantes.addEventListener("click",Atacar);
+
     campeon.addEventListener("click",Campeon);
 
 }
