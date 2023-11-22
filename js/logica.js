@@ -1,5 +1,7 @@
 var picas, corazones, diamantes, treboles;
 var objcarta_diamante, objcarta_trebol, objetocarta_corazon, objcarta_pica;
+var carta_enemigo;
+var lf_jugador=1000, lf_pc=1000;
 class Carta
 {
     constructor(rango){
@@ -24,6 +26,16 @@ class Carta
 }
 function aleatorio(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
+}
+function estadoCombate(e) {
+    //preparamos el dom para el michi parrafo
+    let objdom = document.getElementById("combate");
+    //esto crea una etiqueta html
+    let parrafo = document.createElement("p");
+    //insertamos texto en dicha etiqueta
+    parrafo.innerHTML="ataque ";
+    //ponemos el michi parrafo en el dom
+    objdom.appendChild(parrafo);
 }
 function Campeon() {
     let c_elejido;
@@ -90,7 +102,54 @@ function Atacar(e) {
             document.getElementById("carta_4").disabled = true;           
             break;   
     }
-    alert("Enemigo elije");
+    //alert("Enemigo elije");
+    ContraAtacar(e);
+    estadoCombate();
+}
+function ContraAtacar(e) {
+    carta_enemigo = new Carta();
+    alert("ataque: "+carta_enemigo.ataque+" defenza: "+carta_enemigo.defenza);
+    switch (e.target.id) {
+        case "carta_1":
+            if(objcarta_pica.ataque > carta_enemigo.defenza){
+                lf_pc = lf_pc - (objcarta_pica.ataque - carta_enemigo.defenza);
+                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
+            }else {
+                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_pica.defenza);
+                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
+            }
+            break;
+        case "carta_2":
+            if(objcarta_corazon.ataque > carta_enemigo.defenza){
+                lf_pc = lf_pc - (objcarta_corazon.ataque - carta_enemigo.defenza);
+                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
+            }else {
+                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_corazon.defenza);
+                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
+            }
+    //        objcarta_corazon
+            break;
+        case "carta_3":
+            if(objcarta_diamante.ataque > carta_enemigo.defenza){
+                lf_pc = lf_pc - (objcarta_diamante.ataque - carta_enemigo.defenza);
+                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
+            }else {
+                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_diamante.defenza);
+                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
+            }
+        //    objcarta_diamante    
+            break;
+        case "carta_4":
+            if(objcarta_trebol.ataque > carta_enemigo.defenza){
+                lf_pc = lf_pc - (objcarta_trebol.ataque - carta_enemigo.defenza);
+                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
+            }else {
+                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_trebol.defenza);
+                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
+            }           
+ //           objcarta_trebol
+            break;   
+    }     
 }
 
 //alert("Bienvenido");
