@@ -6,6 +6,7 @@ var c_elejido, c_enemigo;
 var b_atacar, b_reiniciar;
 var n_turno=0;
 let secjugador, secbatalla;
+let band = false;
 class Carta
 {
     constructor(rango){
@@ -64,19 +65,24 @@ function evaluarAtaque() {
 
 }
 function estadoCombate(e) {
-    //preparamos el dom para el michi parrafo
-    let objdom = document.getElementById("combate");
-    //esto crea una etiqueta html
-    let parrafo = document.createElement("p");
-    //insertamos texto en dicha etiqueta
-    parrafo.innerHTML="ataque jugador: "+carta_jugador.ataque+" defenza jugador: "+carta_jugador.defenza+
-    " ataque pc: "+carta_enemigo.ataque+" defenza pc: "+carta_enemigo.defenza;
-    //ponemos el michi parrafo en el dom
-    objdom.appendChild(parrafo);
+    if(n_turno != 0 && band)
+    {
+        //preparamos el dom para el michi parrafo
+        let objdom = document.getElementById("combate");
+        //esto crea una etiqueta html
+        let parrafo = document.createElement("p");
+        //insertamos texto en dicha etiqueta
+        parrafo.innerHTML="ataque jugador: "+carta_jugador.ataque+" defenza jugador: "+carta_jugador.defenza+
+        " ataque pc: "+carta_enemigo.ataque+" defenza pc: "+carta_enemigo.defenza;
+        //ponemos el michi parrafo en el dom
+        objdom.appendChild(parrafo);
+    }
+
     //actualiza vida de personajes
     document.getElementById("vidas_jugador").innerHTML=lf_jugador;
     document.getElementById("vidas_pc").innerHTML=lf_pc;
-    if(n_turno == 4) definirGanador();
+    band = false;
+    if(n_turno == 4 || lf_jugador <= 0 || lf_pc <= 0) definirGanador();
 }
 function Campeon() {
     if(document.getElementById("misu").checked){
@@ -141,6 +147,7 @@ function Atacar(e) {
     }
     //alert("Enemigo elije");
     n_turno++;
+    band = true;
     ContraAtacar(e);
     evaluarAtaque();
  //   estadoCombate(e);
