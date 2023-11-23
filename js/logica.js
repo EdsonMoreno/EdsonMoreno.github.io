@@ -4,6 +4,7 @@ var carta_enemigo, carta_jugador;
 var lf_jugador=1000, lf_pc=1000;
 var c_elejido, c_enemigo;
 var b_atacar;
+var n_turno=0;
 class Carta
 {
     constructor(rango){
@@ -28,6 +29,11 @@ class Carta
 }
 function aleatorio(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
+}
+function definirGanador() {
+    if(lf_jugador > lf_pc ){ alert("You Win");}
+    else {  alert("You Loss mr Boond"); }
+    document.getElementById("atacar").disabled = true;
 }
 function evaluarAtaque() {
     //ataque vs defenza
@@ -68,6 +74,7 @@ function estadoCombate(e) {
     //actualiza vida de personajes
     document.getElementById("vidas_jugador").innerHTML=lf_jugador;
     document.getElementById("vidas_pc").innerHTML=lf_pc;
+    if(n_turno == 4) definirGanador();
 }
 function Campeon() {
     if(document.getElementById("misu").checked){
@@ -129,6 +136,7 @@ function Atacar(e) {
             break;   
     }
     //alert("Enemigo elije");
+    n_turno++;
     ContraAtacar(e);
     evaluarAtaque();
  //   estadoCombate(e);
@@ -140,6 +148,8 @@ function ContraAtacar(e) {
 //alert("Bienvenido");
 window.onload = function(){
     let campeon = document.getElementById("campeon");
+    var b_reiniciar = document.getElementById("reiniciar");
+
     b_atacar = document.getElementById("atacar");
     picas= document.getElementById("carta_1");
     trebol= document.getElementById("carta_4");
@@ -151,7 +161,8 @@ window.onload = function(){
     corazones.addEventListener("click",Atacar);
     diamantes.addEventListener("click",Atacar);
     b_atacar.addEventListener("click",estadoCombate)
-
+    b_reiniciar.addEventListener("click",()=>{location.reload();});
+    
     campeon.addEventListener("click",Campeon);
 
 }
