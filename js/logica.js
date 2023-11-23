@@ -3,7 +3,7 @@ var objcarta_diamante, objcarta_trebol, objetocarta_corazon, objcarta_pica;
 var carta_enemigo, carta_jugador;
 var lf_jugador=1000, lf_pc=1000;
 var c_elejido, c_enemigo;
-var b_atacar;
+var b_atacar, b_reiniciar;
 var n_turno=0;
 class Carta
 {
@@ -34,6 +34,7 @@ function definirGanador() {
     if(lf_jugador > lf_pc ){ alert("You Win");}
     else {  alert("You Loss mr Boond"); }
     document.getElementById("atacar").disabled = true;
+    b_reiniciar.style.display = "block";
 }
 function evaluarAtaque() {
     //ataque vs defenza
@@ -148,7 +149,8 @@ function ContraAtacar(e) {
 //alert("Bienvenido");
 window.onload = function(){
     let campeon = document.getElementById("campeon");
-    var b_reiniciar = document.getElementById("reiniciar");
+    b_reiniciar = document.getElementById("reiniciar");
+    b_reiniciar.style.display = "none";
 
     b_atacar = document.getElementById("atacar");
     picas= document.getElementById("carta_1");
