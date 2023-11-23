@@ -5,6 +5,7 @@ var lf_jugador=1000, lf_pc=1000;
 var c_elejido, c_enemigo;
 var b_atacar, b_reiniciar;
 var n_turno=0;
+let secjugador, secbatalla;
 class Carta
 {
     constructor(rango){
@@ -92,6 +93,8 @@ function Campeon() {
     document.getElementById("campeon_jugador").innerHTML="<b>"+c_elejido+"</b>";
     alert("Elejiste: "+c_elejido);
     CampeonEnemigo();
+    secbatalla.style.display = "block";
+    secjugador.style.display = "none";
 
 }
 function CampeonEnemigo(){
@@ -150,7 +153,10 @@ function ContraAtacar(e) {
 window.onload = function(){
     let campeon = document.getElementById("campeon");
     b_reiniciar = document.getElementById("reiniciar");
+    secbatalla = document.getElementById("batalla");
+    secjugador = document.getElementById("elejir-carta");
     b_reiniciar.style.display = "none";
+    secbatalla.style.display = "none";
 
     b_atacar = document.getElementById("atacar");
     picas= document.getElementById("carta_1");
