@@ -2,13 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba</title>
+    <title>Batalla de Techos 🔥💧🌐✈️</title>
+    <script src="./js/logica.js"></script>
 </head>
 <body>
-    <p>
-        este es un parrafo de pruebas.
-    </p>
+    <section id="elejir-carta">
+        <h1>Batalla de Techos 🔥💧🌐✈️</h1>
+        <p>Elije un campeon:</p>
+        <!--Los botones de radio se en el mismo name para poder
+        elejir solo uno-->
+        <!--La etiqueta for vincula label con radio-->
+        <input type="radio" name="e-campeon" id="misu"> <label for="misu">Misu -> agua</label>
+        <input type="radio" name="e-campeon" id="tsuchi"> <label for="tsuchi">Tsuchi -> tierra</label>
+        <input type="radio" name="e-campeon" id="hi"> <label for="hi">Hi -> fuego</label>
+        <input type="radio" name="e-campeon" id="kaze"> <label for="kaze">kaze -> aire</label>
+
+        <button id="campeon">Yo te Elijo!</button>
+    </section>
+    <section id="batalla">
+        <div>Vida jugador: <span id="vidas_jugador">1000</span> campeon: <span id="campeon_jugador"></span></div>
+        <div>Vida Pc: <span id="vidas_pc">1000</span> campeon: <span id="campeon_pc"></span></div>
+        <div id="combate"></div>
+    </section>
+
+    <section id="resultado">
+        <button id="reiniciar">Volver a comenzar</button>
+    </section>
+    <section id="elejir-ataque">
+        <button id="carta_1"> ♠️</button>
+        <button id="carta_2"> ♥️ </button>
+        <button id="carta_3"> ♦️ </button>
+        <button id="carta_4"> ♣️ </button>
+
+        <button id="atacar">A la carga mi valiente!</button>
+    </section>
 </body>
 </html>
