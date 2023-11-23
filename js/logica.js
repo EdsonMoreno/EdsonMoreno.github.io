@@ -1,7 +1,9 @@
 var picas, corazones, diamantes, treboles;
 var objcarta_diamante, objcarta_trebol, objetocarta_corazon, objcarta_pica;
-var carta_enemigo;
+var carta_enemigo, carta_jugador;
 var lf_jugador=1000, lf_pc=1000;
+var c_elejido, c_enemigo;
+var b_atacar;
 class Carta
 {
     constructor(rango){
@@ -27,18 +29,43 @@ class Carta
 function aleatorio(min, max){
     return Math.floor(Math.random()*(max-min+1)+min);
 }
+function evaluarAtaque() {
+    //ataque vs defenza
+    // ataque jugador mayor defenza pc
+    //      jugador gana
+    //      ataque - defenza 
+    // ataque pc mayor defenza jugador
+    //      pc gana
+    // ambos pierden la mitad del daño causado
+    // 
+    if (carta_jugador.ataque > carta_enemigo.defenza 
+        && carta_enemigo.ataque > carta_jugador.defenza )
+    {
+        let danj = (carta_jugador.ataque - carta_enemigo.defenza) / 2;
+        let danp = (carta_enemigo.ataque - carta_jugador.defenza) / 2;
+        lf_jugador-=danp;
+        lf_pc-=danj;
+    }
+    else if(carta_jugador.ataque > carta_enemigo.defenza)
+    {
+        lf_pc = lf_pc - (carta_jugador.ataque - carta_enemigo.defenza);
+    }else if(carta_enemigo.ataque > carta_jugador.defenza)
+    {
+        lf_jugador = lf_jugador - (carta_enemigo.ataque - carta_jugador.defenza);
+    }
+}
 function estadoCombate(e) {
     //preparamos el dom para el michi parrafo
     let objdom = document.getElementById("combate");
     //esto crea una etiqueta html
     let parrafo = document.createElement("p");
     //insertamos texto en dicha etiqueta
-    parrafo.innerHTML="ataque ";
+    parrafo.innerHTML="ataque jugador: "+carta_jugador.ataque+" defenza jugador: "+carta_jugador.defenza+
+    " ataque pc: "+carta_enemigo.ataque+" defenza pc: "+carta_enemigo.defenza;
     //ponemos el michi parrafo en el dom
     objdom.appendChild(parrafo);
 }
 function Campeon() {
-    let c_elejido;
     if(document.getElementById("misu").checked){
         c_elejido = "Misu";
     }else if(document.getElementById("tsuchi").checked){
@@ -50,13 +77,12 @@ function Campeon() {
     }else{
         alert("Debes elegir un campeon");
     }
-    document.getElementById("campeon_jugador").innerHTML="<b>"+c_elejido+"</>";
+    document.getElementById("campeon_jugador").innerHTML="<b>"+c_elejido+"</b>";
     alert("Elejiste: "+c_elejido);
     CampeonEnemigo();
 
 }
 function CampeonEnemigo(){
-    let c_enemigo;
     switch (aleatorio(0,3)) {
         case 0:
             c_enemigo = "Misu"
@@ -75,86 +101,42 @@ function CampeonEnemigo(){
             break;
     }
     alert("La Pc elige a: "+c_enemigo);
-    document.getElementById("campeon_pc").innerHTML="<b>"+c_enemigo+"</>";
+    document.getElementById("campeon_pc").innerHTML="<b>"+c_enemigo+"</b>";
 
 }
 function Atacar(e) {
    // alert(e.target.id);
     switch (e.target.id) {
         case "carta_1":
-            objcarta_pica = new Carta();
-            alert("ataque: "+objcarta_pica.ataque+" defenza: "+objcarta_pica.defenza);
+            carta_jugador = new Carta();
             document.getElementById("carta_1").disabled = true;
             break;
         case "carta_2":
-            objcarta_corazon = new Carta();
-            alert("ataque: "+objcarta_corazon.ataque+" defenza: "+objcarta_corazon.defenza);
+            carta_jugador = new Carta();
             document.getElementById("carta_2").disabled = true;
             break;
         case "carta_3":
-            objcarta_diamante = new Carta();
-            alert("ataque: "+objcarta_diamante.ataque+" defenza: "+objcarta_diamante.defenza);
+            carta_jugador = new Carta();
             document.getElementById("carta_3").disabled = true;           
             break;
         case "carta_4":
-            objcarta_trebol = new Carta();
-            alert("ataque: "+objcarta_trebol.ataque+" defenza: "+objcarta_trebol.defenza);
+            carta_jugador = new Carta();
             document.getElementById("carta_4").disabled = true;           
             break;   
     }
     //alert("Enemigo elije");
     ContraAtacar(e);
-    estadoCombate();
+    evaluarAtaque();
+ //   estadoCombate(e);
 }
 function ContraAtacar(e) {
-    carta_enemigo = new Carta();
-    alert("ataque: "+carta_enemigo.ataque+" defenza: "+carta_enemigo.defenza);
-    switch (e.target.id) {
-        case "carta_1":
-            if(objcarta_pica.ataque > carta_enemigo.defenza){
-                lf_pc = lf_pc - (objcarta_pica.ataque - carta_enemigo.defenza);
-                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
-            }else {
-                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_pica.defenza);
-                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
-            }
-            break;
-        case "carta_2":
-            if(objcarta_corazon.ataque > carta_enemigo.defenza){
-                lf_pc = lf_pc - (objcarta_corazon.ataque - carta_enemigo.defenza);
-                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
-            }else {
-                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_corazon.defenza);
-                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
-            }
-    //        objcarta_corazon
-            break;
-        case "carta_3":
-            if(objcarta_diamante.ataque > carta_enemigo.defenza){
-                lf_pc = lf_pc - (objcarta_diamante.ataque - carta_enemigo.defenza);
-                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
-            }else {
-                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_diamante.defenza);
-                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
-            }
-        //    objcarta_diamante    
-            break;
-        case "carta_4":
-            if(objcarta_trebol.ataque > carta_enemigo.defenza){
-                lf_pc = lf_pc - (objcarta_trebol.ataque - carta_enemigo.defenza);
-                document.getElementById("vidas_pc").innerHTML = ""+lf_pc;
-            }else {
-                lf_jugador = lf_jugador - (carta_enemigo.ataque - objcarta_trebol.defenza);
-                document.getElementById("vidas_jugador").innerHTML = ""+lf_jugador;       
-            }           
- //           objcarta_trebol
-            break;   
-    }     
+    carta_enemigo = new Carta(); 
 }
 
 //alert("Bienvenido");
 window.onload = function(){
     let campeon = document.getElementById("campeon");
+    b_atacar = document.getElementById("atacar");
     picas= document.getElementById("carta_1");
     trebol= document.getElementById("carta_4");
     corazones = document.getElementById("carta_2");
@@ -164,6 +146,7 @@ window.onload = function(){
     trebol.addEventListener("click",Atacar);
     corazones.addEventListener("click",Atacar);
     diamantes.addEventListener("click",Atacar);
+    b_atacar.addEventListener("click",estadoCombate)
 
     campeon.addEventListener("click",Campeon);
 
