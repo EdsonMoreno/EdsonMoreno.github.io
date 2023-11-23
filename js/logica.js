@@ -53,6 +53,7 @@ function evaluarAtaque() {
     {
         lf_jugador = lf_jugador - (carta_enemigo.ataque - carta_jugador.defenza);
     }
+
 }
 function estadoCombate(e) {
     //preparamos el dom para el michi parrafo
@@ -64,6 +65,9 @@ function estadoCombate(e) {
     " ataque pc: "+carta_enemigo.ataque+" defenza pc: "+carta_enemigo.defenza;
     //ponemos el michi parrafo en el dom
     objdom.appendChild(parrafo);
+    //actualiza vida de personajes
+    document.getElementById("vidas_jugador").innerHTML=lf_jugador;
+    document.getElementById("vidas_pc").innerHTML=lf_pc;
 }
 function Campeon() {
     if(document.getElementById("misu").checked){
